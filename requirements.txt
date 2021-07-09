@@ -1,0 +1,7 @@
+scikit_learn>=0.21.3   
+torch>=1.1   
+pytorch-pretrained-bert==0.6.2   
+transformers==2.6
+multiprocess==0.70.11.1
+tqdm==4.49.0
+numpy>=1.19.5
