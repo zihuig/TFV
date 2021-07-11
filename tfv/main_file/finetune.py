@@ -1,11 +1,25 @@
 import os
+import sys
 import torch
+import torch.nn as nn
+import torch.nn.functional as F
 import argparse
 import random 
 import numpy as np
 import time
 from operator import itemgetter
 import pandas as pd
+import torch.optim as optim
+from transformers import BertModel, BertTokenizer, AutoConfig, TapasModel, TapasForSequenceClassification, TapasTokenizer, TapasConfig
+from torch.autograd import Variable
+from sklearn.metrics import precision_recall_fscore_support
+from torch.utils.data import Dataset, DataLoader
+from collections import defaultdict
+from tqdm import tqdm
+from torch.utils.data import dataloader
+from torch.multiprocessing import reductions
+from multiprocessing.reduction import ForkingPickler
+from torch.nn import CrossEntropyLoss, MSELoss
 
 
 def setup_seed(seed):
@@ -17,17 +31,6 @@ def setup_seed(seed):
     torch.backends.cudnn.deterministic = True
 
 setup_seed(0)
-
-from collections import defaultdict
-from tqdm import tqdm
-import random
-import numpy as np
-
-import sys
-from torch.utils.data import dataloader
-from torch.multiprocessing import reductions
-from multiprocessing.reduction import ForkingPickler
-from torch.nn import CrossEntropyLoss, MSELoss
 
 default_collate_func = dataloader.default_collate
 
@@ -45,18 +48,6 @@ for t in torch._storage_classes:
     else:
         if t in ForkingPickler._extra_reducers:
             del ForkingPickler._extra_reducers[t]
-
-import torch.optim as optim
-
-from transformers import BertModel, BertTokenizer, AutoConfig, TapasModel, TapasForSequenceClassification, TapasTokenizer, TapasConfig
-
-from torch.autograd import Variable
-from sklearn.metrics import precision_recall_fscore_support
-from torch.utils.data import Dataset, DataLoader
-
-import torch
-import torch.nn as nn
-import torch.nn.functional as F
 
 
 
